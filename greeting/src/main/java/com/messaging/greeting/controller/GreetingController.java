@@ -35,4 +35,10 @@ public class GreetingController {
     	return greetingService.addGreeting(user);
     }
     
+    //Retrieving the respective message
+    @GetMapping("/get")
+    public Greeting greeting(@RequestParam(value = "id") Long id) {
+    	return greetingService.getGreetingById(id);
+    }
+    
 }
