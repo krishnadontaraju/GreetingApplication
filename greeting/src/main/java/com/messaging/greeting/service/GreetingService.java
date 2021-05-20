@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+import javax.management.AttributeNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +38,25 @@ public class GreetingService implements IGreetingService{
     	greetingRepository.findAll().forEach(greeting -> greetings.add(greeting));
     	
     	return greetings;
+	}
+
+	@Override
+	public Greeting updateGreeting(Greeting greeting, Long id, String firstName, String lastName) {
+		Greeting newGreeting = null;
+		try {
+			newGreeting = greetingRepository.findById(id).
+													orElseThrow(() -> new AttributeNotFoundException("User not found on :: "+ id));
+		} catch (AttributeNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		User user = new User();
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
+		newGreeting.setMessage(String.format(messageTemplate, (user.toString().isEmpty()) ? "Hello There" : user.toString()));
+		
+		return newGreeting;
+		
 	}
     
  }

@@ -2,9 +2,14 @@ package com.messaging.greeting.controller;
 
 import java.util.List;
 
+import javax.management.AttributeNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,5 +52,11 @@ public class GreetingController {
     @GetMapping("/getAll")
     public List<Greeting> getAllGreetings(){
     	return greetingService.getAllGreetings();
+    }
+    
+    @PutMapping("/{id}/{editFirstName}/{editLastName}")
+    public Greeting updateGreeting(@PathVariable(value = "id") Long id ,@PathVariable(value = "ediFirstName") String firstName,
+    								@PathVariable(value = "editLastName") String lastName,@RequestBody Greeting greeting) throws AttributeNotFoundException {
+    	return greetingService.updateGreeting(greeting , id , firstName , lastName);
     }
 }
