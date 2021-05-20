@@ -7,6 +7,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import javax.management.AttributeNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.messaging.greeting.model.Greeting;
@@ -57,6 +59,15 @@ public class GreetingService implements IGreetingService{
 		
 		return newGreeting;
 		
+	}
+
+	@Override
+	public ResponseEntity<Long> deleteMessage(Long id) {
+		
+		greetingRepository.deleteById(id);
+		
+		return new ResponseEntity<>(id,HttpStatus.OK);
+			
 	}
     
  }

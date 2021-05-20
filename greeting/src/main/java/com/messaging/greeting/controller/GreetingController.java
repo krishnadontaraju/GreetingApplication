@@ -5,9 +5,10 @@ import java.util.List;
 import javax.management.AttributeNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,5 +59,10 @@ public class GreetingController {
     public Greeting updateGreeting(@PathVariable(value = "id") Long id ,@PathVariable(value = "ediFirstName") String firstName,
     								@PathVariable(value = "editLastName") String lastName,@RequestBody Greeting greeting) throws AttributeNotFoundException {
     	return greetingService.updateGreeting(greeting , id , firstName , lastName);
+    }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Long>deleteMessage(@PathVariable (value = "id") Long id){
+    	return greetingService.deleteMessage(id);
     }
 }
